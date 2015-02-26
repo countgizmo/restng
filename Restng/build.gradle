@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://maven.restlet.com"
+    }
+}
+
+dependencies {
+    compile group: 'org.testng', name: 'testng', version: '6.8.21'
+    compile group: 'org.restlet.jse', name: 'org.restlet', version: '2.3.1'
+    compile group: 'org.json', name: 'json', version: '20141113'
+}
+
+test {
+    useTestNG()
+}
