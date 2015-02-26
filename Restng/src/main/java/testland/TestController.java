@@ -1,8 +1,11 @@
 package testland;
 
+import common.Utils;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
+import org.reflections.Reflections;
+
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
@@ -18,7 +21,9 @@ public class TestController {
     }
     
     public void runTestByName(String targetTestName) {     
-        testng.setTestClasses(new Class[] { getClassByString(targetTestName) });
+        testng.setTestClasses(
+                new Class[] { Utils.getClassByString(targetTestName) }
+        );
         testng.addListener(tla);
         testng.run(); 
     }
@@ -31,15 +36,17 @@ public class TestController {
         return failedTests;
     }
     
-    private Class getClassByString(String className) {
-        Class cls = null;
+    public List<String> getAllTestNames() {
+        List<String> testNames = new ArrayList();
+        Reflections reflections = new Reflections("tests");
         
-        try {
-            cls = Class.forName(className);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Set<Class<? extends Object>> allClasses;
+        allClasses = reflections.getSubTypesOf(Object.class);
         
-        return cls;
+        allClasses.stream().forEach((cls) -> {
+            testNames.add(cls.getSimpleName());
+        });
+        
+        return testNames;
     }
 }
