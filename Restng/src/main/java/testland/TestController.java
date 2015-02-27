@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
 
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -22,7 +23,7 @@ public class TestController {
     
     public void runTestByName(String targetTestName) {     
         testng.setTestClasses(
-                new Class[] { Utils.getClassByString(targetTestName) }
+            new Class[] { Utils.getClassByString(targetTestName) }
         );
         testng.addListener(tla);
         testng.run(); 
@@ -38,7 +39,7 @@ public class TestController {
     
     public List<String> getAllTestNames() {
         List<String> testNames = new ArrayList();
-        Reflections reflections = new Reflections("tests");
+        Reflections reflections = new Reflections("dummytests", new SubTypesScanner(false));
         
         Set<Class<? extends Object>> allClasses;
         allClasses = reflections.getSubTypesOf(Object.class);

@@ -1,5 +1,5 @@
 
-package tests;
+package dummytests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,17 +7,17 @@ import org.testng.annotations.Test;
 
 public class SimpleTest {
     @Test(successPercentage = 0)
-    public void failedTest1() {
+    public void passingTest1() {
         Assert.assertTrue(true);
     }
     
     @Test
-    public void failedTest2() {
+    public void passingTest2() {
         Assert.assertTrue(true);
     }
     
     @Test
-    public void failedTest3() {
+    public void passingTest3() {
         Assert.assertTrue(true);
     }
 }
